@@ -129,6 +129,11 @@ sealed trait Stream[+A] {
   def hasSubsequence[A](s: Stream[A]): Boolean = tails exists (_ startsWith s)
 
   //Ex 5.16
+
+  /**
+   * Expected result: scala> Stream(1,2,3).scanRight(0)(_ + _).toList res0: List[Int] = List(6,5,3,0)
+   */
+
   def scanRight[B](z: B)(f: (A, => B) => B): Stream[B] = ???  //TODO implement it one day as it is very hard !! !! !! !!
 
 
