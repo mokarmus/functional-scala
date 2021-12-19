@@ -3,9 +3,6 @@ package chapter7
 
 import java.util.concurrent.{ExecutorService, Future, TimeUnit}
 
-class Par[A] {
-
-}
 
 object ParOps {
 

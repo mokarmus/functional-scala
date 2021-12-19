@@ -27,6 +27,13 @@ object RNG {
     case (_, newRng) => nonNegativeInt(newRng)
   }
 
+  //Ex 8.4
+  @tailrec
+  def nonNegativeBetween(start: Int, stopExclusive: Int)(rng: RNG): (Int, RNG) = rng.nextInt match {
+    case (i, newRng) if i >= start && i < stopExclusive => (i, newRng)
+    case (_, newRng) => nonNegativeBetween(start, stopExclusive)(newRng)
+  }
+
   //Ex 6.2
   def double(rng: RNG): (Double, RNG) = {
     val (i, newRng) = nonNegativeInt(rng)
@@ -103,6 +110,7 @@ object RNG {
     else nonNegativeLessThan(n)
   }
   }
+
 
   //Ex 6.9
   def mapUsingFlatMap[A, B](a: Rand[A])(f: A => B): Rand[B] =

@@ -14,7 +14,6 @@ object NonBlockingParOps {
 
   type Par[A] = ExecutorService => Future[A]
 
-
   def run[A](p: Par[A])(es: ExecutorService): A = {
     val ref = new AtomicReference[A]
     val latch = new CountDownLatch(1)
