@@ -1,4 +1,5 @@
-package fpinscala.parallelism
+package org.okarmus
+package chapter7
 
 import java.util.concurrent.atomic.{AtomicInteger, AtomicReference}
 import java.util.concurrent.{Callable,ExecutorService}

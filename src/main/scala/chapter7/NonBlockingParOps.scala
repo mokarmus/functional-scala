@@ -1,8 +1,6 @@
 package org.okarmus
 package chapter7
 
-import fpinscala.parallelism.Actor
-
 import java.util.concurrent.{Callable, CountDownLatch, ExecutorService}
 import java.util.concurrent.atomic.AtomicReference
 

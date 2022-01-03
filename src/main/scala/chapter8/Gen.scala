@@ -4,12 +4,10 @@ package chapter8
 import chapter6.RNG.{Rand, nonNegativeBetween, nonNegativeInt, unit}
 import chapter6.{RNG, SimpleRNG, State}
 import chapter8.Prop.{FailedCase, MaxSize, SuccessCount, TestCases, run}
-
-import org.okarmus.chapter7.ParOps.Par
-import org.okarmus.chapter7.{Future, ParOps}
+import chapter7.ParOps
+import chapter7.ParOps.Par
 
 import java.util.concurrent.{ExecutorService, Executors}
-import scala.math.Equiv
 
 case class Gen[A](sample: State[RNG, A]) {
   self =>
