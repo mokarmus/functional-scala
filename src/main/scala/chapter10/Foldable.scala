@@ -22,7 +22,6 @@ trait Foldable[F[_]] {
 
 object Foldable {
 
-
   //Ex. 10.12 - the rest foldables are pretty similar
   val listFoldable: Foldable[List] = new Foldable[List] {
     override def foldRight[A, B](as: List[A])(z: B)(f: (A, B) => B): B = as.foldRight(z)(f)

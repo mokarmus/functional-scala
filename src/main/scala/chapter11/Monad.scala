@@ -3,29 +3,31 @@ package chapter11
 
 import chapter8.Gen
 import chapter6.State
+import chapter12.Applicative
 
-trait Monad[F[_]] {
+trait Monad[F[_]] extends Applicative[F] {
+  self =>
 
   def unit[A](a: => A): F[A]
 
   def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B]
 
-  def map[A, B](fa: F[A])(f: A => B): F[B] = flatMap(fa)(a => unit(f(a)))
+  override def map[A, B](fa: F[A])(f: A => B): F[B] = flatMap(fa)(a => unit(f(a)))
 
   def map2[A, B, C](fa: F[A], fb: F[B])(f: (A, B) => C): F[C] =
     flatMap(fa)(a => map(fb)(b => f(a, b)))
 
   //Ex 11.3
-  def sequence[A](lma: List[F[A]]): F[List[A]] =
+  override def sequence[A](lma: List[F[A]]): F[List[A]] =
     lma.foldRight(unit(List.empty[A])) { (a, acc) => map2(a, acc)(_ :: _) }
 
-  def traverse[A, B](la: List[A])(f: A => F[B]): F[List[B]] =
+  override def traverse[A, B](la: List[A])(f: A => F[B]): F[List[B]] =
     sequence(la.map(f))
 
   //Ex. 11.4
-  def replicateM[A](n: Int, ma: F[A]): F[List[A]] = sequence(List.fill(n)(ma))
+  override def replicateM[A](n: Int, ma: F[A]): F[List[A]] = sequence(List.fill(n)(ma))
 
-  def product[A, B](ma: F[A], mb: F[B]): F[(A, B)] = map2(ma, mb)((_, _))
+  override def product[A, B](ma: F[A], mb: F[B]): F[(A, B)] = map2(ma, mb)((_, _))
 
   //Ex. 11.5
   def filterM[A](ms: List[A])(f: A => F[Boolean]): F[List[A]] =
@@ -49,6 +51,13 @@ trait Monad[F[_]] {
 
   def composeUsingJoin[A, B, C](f: A => F[B], g: B => F[C]): A => F[C] = a =>
     join(map(f(a))(b => g(b)))
+
+  //Ex. 12.11
+  /*def compose[G[_]](G: Monad[G]) = new Monad[({type f[x] = F[G[x]]})#f] {
+    override def unit[A](a: => A): F[G[A]] = self.unit(G.unit(a))
+
+    override def flatMap[A, B](fga: F[G[A]])(f: A => F[G[B]]): F[G[B]] = self.flatMap(a => G.flatMap(b => ))
+  }*/
 }
 
 object Monad {
