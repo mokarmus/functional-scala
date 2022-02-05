@@ -5,7 +5,7 @@ trait Files[A]
 
 case class OpenRead(file: String) extends Files[HandleR]
 case class OpenWrite(file: String) extends Files[HandleW]
-case class ReadLine(h: HandleR) extends Files[Option[String]]
+case class ReadLine2(h: HandleR) extends Files[Option[String]]
 case class WriteLine(h: HandleW, line: String) extends Files[Unit]
 
 
@@ -13,9 +13,9 @@ trait HandleR
 trait HandleW
 
 object Files {
-
-  def loop(f: HandleR, c: HandleW): Free[Files, Unit] = for {
-    line <- Suspend { ReadLine(f) }
+  //TODO make it works one day !! !! !! !!
+  /*def loop(f: HandleR, c: HandleW): Free[Files, Unit] = for {
+    line <- Suspend { ReadLine2(f) }
     _ <- line match {
       case None => IO.unit(())
       case Some(s) => Suspend {
@@ -29,5 +29,5 @@ object Files {
     c <- Suspend(OpenWrite("celsius.txt"))
     _ <- loop(f,c)
   } yield ()
-
+*/
 }

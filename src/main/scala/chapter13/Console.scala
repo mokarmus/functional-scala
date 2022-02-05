@@ -58,7 +58,6 @@ object Console {
   def runConsolePar[A](a: Free[Console, A]): Par[A] =
     Free.runFree[Console, Par, A](a)(consoleToPar)
 
-  @tailrec
   def runConsoleReader[A](io: ConsoleIO[A]): ConsoleReader[A] = Free.runFree[Console, ConsoleReader, A](io)(consoleToReader)
   //Ex 13.4
   def translate[F[_], G[_], A](f: Free[F, A])(fg: F ~> G): Free[G, A] = {
